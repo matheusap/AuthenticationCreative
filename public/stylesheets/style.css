@@ -1,0 +1,22 @@
+body {
+          background-color: #d3d3d3;
+      }
+      p {
+          font-family: Calibri Verdana sans-serif;
+      }
+      .box {
+    		width: 3vw;
+    		height: 3vh;
+    		float: left;
+    		display : flex;
+        border-radius: 2px;
+    		justify-content : space-around;
+    		margin : 1px;
+        -webkit-transition: background-color 0.000001s ease-in-out;
+        -moz-transition: background-color 0.000001s ease-in-out;
+        -o-transition: background-color 0.000001s ease-in-out;
+        -khtml-transition: background-color 0.000001s ease-in-out;
+        transition: background-color 0.000001s ease-in-out;
+  		}
+      #songs {
+      }

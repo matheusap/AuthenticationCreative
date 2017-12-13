@@ -1,0 +1,47 @@
+<!doctype html>
+<html ng-app="myApp"> 
+    
+<head>
+    <title>Audio Chroma</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+
+</head>
+        
+<body>  
+    <div ng-controller="myController">
+        <h2 id="welcomeText">Welcome. You are Logged In as
+            <%= username %>
+        </h2>
+        <a id="logoutLink" href="/logout">logout</a>
+        <a id="editLink" href="/user">Edit User</a>
+        <br>
+	
+	<table>
+      <tr>
+        <td>
+          <audio src="music/Darkesword - Ancient Hero.mp3" id="audio" controls>Audio not supported</audio>
+        </td>
+        <td>
+          <select id="songs">
+          </select>
+        </td>
+        <td>
+          <p>Pick a song and press play to start the audio-visualization.</p>
+        </td>
+      </tr>
+    </table>
+    <!-- <div class="track-container"> -->
+        <!-- <div class="track"> -->
+            <!-- <canvas id="oscilloscope"></canvas> -->
+        <!-- </div> -->
+    <!-- </div> -->
+
+    <div id="boxes">
+</div>
+</div>	
+    <script src="http://code.angularjs.org/1.2.9/angular.min.js"></script>
+    <script src="/javascripts/my_app.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="crossorigin="anonymous"></script>
+</body>
+      
+</html>
