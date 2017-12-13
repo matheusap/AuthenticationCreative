@@ -29,7 +29,7 @@ $.getJSON('/getMusic', function(json) {
 
 $('#songs').on('change', function() {
   var $selected = $('#songs').find(':selected').text();
-  $('#audio').attr('src', './public/music/' + $selected);
+  $('#audio').attr('src', './music/' + $selected);
 });
 
 var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
