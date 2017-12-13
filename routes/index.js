@@ -4,6 +4,16 @@ var expressSession = require('express-session');
 var fs = require('fs');
 
 var users = require('../controllers/users_controller');
+
+router.get('/getMusic', function(req, res, next) {
+  fs.readdir('./public/music/', function(err, files) {
+    if (err) throw err;
+
+    console.log('Sent result: ' + files);
+    res.status(200).json(files);
+  })
+});
+
 console.log("before / Route");
 router.get('/', function(req, res){
     console.log("/ Route");
