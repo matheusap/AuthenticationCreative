@@ -1,16 +1,5 @@
-angular.module('myApp', []).
-  controller('myController', ['$scope', '$http',
-                              function($scope, $http) {
-    $http.get('/user/profile')
-        .success(function(data, status, headers, config) {
-      $scope.user = data;
-      $scope.error = "";
-    }).
-    error(function(data, status, headers, config) {
-      $scope.user = {};
-      $scope.error = data;
-    });
-    var boxes = [];
+
+var boxes = [];
 
 for(i = 0; i < 930; i++) {
   hex_color = '';
@@ -40,7 +29,7 @@ $.getJSON('/getMusic', function(json) {
 
 $('#songs').on('change', function() {
   var $selected = $('#songs').find(':selected').text();
-  $('#audio').attr('src', './music/' + $selected);
+  $('#audio').attr('src', './public/music/' + $selected);
 });
 
 var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
@@ -50,62 +39,50 @@ var audioSrc = audioCtx.createMediaElementSource(audio);
 audioSrc.connect(analyser);
 audioSrc.connect(audioCtx.destination);
 
-analyser.fftSize = 2048;
+analyser.fftSize = 4096;
 var bufferLength = analyser.frequencyBinCount;
 var dataArray = new Uint8Array(bufferLength);
 analyser.getByteTimeDomainData(dataArray);
+//console.log(dataArray);
 
-// Get a canvas defined with ID "oscilloscope"
-// var canvas = document.getElementById("oscilloscope");
-// var canvasCtx = canvas.getContext("2d");
-var cycle = 0;
-
-// draw an oscilloscope of the current audio source
 
 function draw() {
 
-  drawVisual = requestAnimationFrame(draw);
-
+ 
   analyser.getByteTimeDomainData(dataArray);
+ 
+  var num_of_slices = 30 * 31,
+  STEP = Math.floor(dataArray.length /num_of_slices),
+  No_Signal = 128;
+  
+ drawVisual = requestAnimationFrame(draw);
+  for (var i = 0, n = 0; i < num_of_slices; i++, n+=STEP) {
 
-  // canvasCtx.fillStyle = 'rgb(200, 200, 200)';
-  // canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+	//var slice = boxes[i];
 
-  // canvasCtx.lineWidth = 2;
-  // canvasCtx.strokeStyle = 'rgb(0, 0, 0)';
+    var val = Math.abs(dataArray[n]) / No_Signal;
+	var balance =  Math.abs(dataArray[n]) - No_Signal;
+	//console.log(balance);
+	
+   hex_color = '';
+   var a = i % 31;
+   var mod = (a/32);//does not go over 1
+   var N = n;
+   var b = 8+val;//val does not go over 2 (as far as i know)
+   var c = i / 58.125;//does not go over 16
+   
+	hex_color += Math.floor(Math.pow((val-.5),4)+1).toString(16);
+	hex_color += Math.floor(Math.pow((val-.5),4)+1).toString(16);
+	hex_color += Math.floor(Math.abs(balance)/2).toString(16);
+	hex_color += Math.floor(Math.abs(balance)/2).toString(16);
+	hex_color += Math.floor((Math.pow((balance),2)/26)+1).toString(16);
+	hex_color += Math.floor((Math.pow((balance),2)/26)+1).toString(16);
 
-  // canvasCtx.beginPath();
-
-  var sliceWidth = 300 * 1.0 / bufferLength;
-  // var sliceWidth = canvas.width * 1.0 / bufferLength;
-  var x = 0;
-
-  for (var i = 0; i < bufferLength; i++) {
-
-    var v = dataArray[i] / 128.0;
-    // var y = v * canvas.height / 2;
-
-    // if (i === 0) {
-      // canvasCtx.moveTo(x, y);
-    // } else {
-      // canvasCtx.lineTo(x, y);
-    // }
-
-    x += sliceWidth;
-
-    var z = Math.abs(v * 150 / 2);
-    if (i % (10000 * analyser.frequencyBinCount) == 0 && !audio.paused) {
-      cycle = (cycle + z * 501) % 360;
-      for (var j = 0; j < boxes.length; ++j) {
-        var color = "hsl(" + (cycle + (j * 11) % 360) + ", " + (100) + "%, " + (50) + "%)";
-        boxes[j].style.backgroundColor = color;
-        // boxes[j].css("background-color", color);
-      }
-    }
+    //console.log(hex_color);
+	boxes[i].style.backgroundColor = '#' + hex_color;
   }
 };
 
 draw();
 
 alert('WARNING!  Do not use if you are epileptic or prone to seizures.');
-  }]);

@@ -1,25 +1,33 @@
 <!doctype html>
-<html ng-app="myApp"> 
+<html> 
     
 <head>
     <title>Audio Chroma</title>
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
-
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	crossorigin="anonymous"></script>
+	<script src="http://code.angularjs.org/1.2.9/angular.min.js"></script>
+	<script src="/javascripts/auth.js"></script>
+     
 </head>
         
-<body>  
+<body ng-app="myApp">  
     <div ng-controller="myController">
-        <h2 id="welcomeText">Welcome. You are Logged In as
+        <h2 id="welcomeText">Welcome
             <%= username %>
         </h2>
+		<h2>We hope you enjoy 3 projects worth of effort</h2>
+		<h2 id="colorText">I noticed you like the color 
+		<%= color %>
+		</h2>
         <a id="logoutLink" href="/logout">logout</a>
         <a id="editLink" href="/user">Edit User</a>
         <br>
-	
-	<table>
+  <table>
       <tr>
         <td>
-          <audio src="music/Darkesword - Ancient Hero.mp3" id="audio" controls>Audio not supported</audio>
+          <audio src="/music/Legend_of_Zelda_Zelda_Heineken_OC_ReMix.mp3" id="audio" controls>Audio not supported</audio>
         </td>
         <td>
           <select id="songs">
@@ -30,18 +38,14 @@
         </td>
       </tr>
     </table>
-    <!-- <div class="track-container"> -->
-        <!-- <div class="track"> -->
-            <!-- <canvas id="oscilloscope"></canvas> -->
-        <!-- </div> -->
-    <!-- </div> -->
-
+   
     <div id="boxes">
-</div>
-</div>	
-    <script src="http://code.angularjs.org/1.2.9/angular.min.js"></script>
-    <script src="/javascripts/my_app.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="crossorigin="anonymous"></script>
+    </div>
+	<div>
+	<h1>The longer you watch the more you'll be able to see the patterns</h1>
+	</div>
 </body>
-      
+
+    <script src="/javascripts/my_app.js"></script>
+     
 </html>
