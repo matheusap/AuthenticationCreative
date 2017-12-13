@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var expressSession = require('express-session');
+var fs = require('fs');
 
 var users = require('../controllers/users_controller');
 console.log("before / Route");
@@ -48,6 +49,14 @@ router.get('/logout', function(req, res){
       res.redirect('/login');
     });
   });
+router.get('/getMusic', function(req, res, next) {
+  fs.readdir('./public/music/', function(err, files) {
+    if (err) throw err;
+
+    console.log('Sent result: ' + files);
+    res.status(200).json(files);
+  })
+});
 router.post('/signup', users.signup);
 router.post('/user/update', users.updateUser);
 router.post('/user/delete', users.deleteUser);
